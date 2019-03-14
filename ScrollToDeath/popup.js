@@ -27,13 +27,15 @@ var quote = document.getElementById("randomQuote");
 quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
 
 var settingsButton = document.getElementById("settingsButton");
+var trackWebsite = document.getElementById("trackButton");
+var removeWebsite = document.getElementById("removeButton");
 
 settingsButton.onclick = function()
 {
     console.log("settings menu");
 }
 
-function trackWebsite()
+trackbutton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         console.log("Tracking website " + tabs[0].url);
@@ -41,7 +43,7 @@ function trackWebsite()
     });
 }
 
-function removeWebsite()
+removeButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         console.log("Removed website " + tabs[0].url);
