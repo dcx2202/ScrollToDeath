@@ -1,12 +1,6 @@
-//
-
-chrome.runTime.onInstalled.addListener(() =>{
+chrome.tabs.onUpdated.addListener(function(info) {
 
     
-})
-
-chrome.tabs.onUpdated.addListener((info) => {
-
     var tracked_urls;
     
     chrome.storage.sync.get(['key'], function(result) {
