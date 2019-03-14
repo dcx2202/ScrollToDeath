@@ -1,0 +1,18 @@
+{
+    "name": "Scroll to Death",
+    "version": "1.0",
+    "description": "Scrolling will waste your life.",
+    "manifest_version": 2,
+    "background": 
+    {
+        "scripts": 
+        [
+            "background.js"
+        ]
+    },
+    "browser_action":{
+
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    }
+}
