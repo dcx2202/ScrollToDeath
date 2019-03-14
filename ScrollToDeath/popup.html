@@ -1,15 +1,23 @@
 <!DOCTYPE html>
   <html>
     <body>
+      <input type="button" id="settingsButton" onclick="settings()" style="background: url(settings_icon.png) no-repeat; border: none; width:24px; height:24px; float: right; cursor: pointer;"></button>
       <p>
           <img src="popup_icon.png" style="float:left;"/>
           <h1 style="font-size: 25pt;padding-top: 25px;">ScrollToDeath</h1>
       </p>
       <p>
         <h1 id="timer" style="font-size: 20pt; text-align: center; line-height: 150%;"> 00:00:00</h1>
-        <h1 style="font-size: 20pt; text-align: center; line-height: 100%;"> Wasted</h1>
         <h3 id="randomQuote" style="text-align: center;"> "If time be of all things the most precious, wasting time must be the greatest prodigality."</h3>
       </p>
+      <div style="text-align:center">
+        <br>
+        <h2>Track Websites</h2>
+        <p>
+          <button class="trackButtons" onclick="trackWebsite()" style="background-color: rgb(55, 212, 41);">Track Current</button>
+          <button class="trackButtons" onclick="removeWebsite()" style="background-color: rgb(212, 41, 41);">Remove Current</button>
+        </p>
+      </div>
 
       <script src="popup.js"></script>
     </body>
@@ -19,6 +27,19 @@
       body{
         width: 350px;
         height: 350px;
+      }
+
+      .trackButtons {
+        color: white;
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      button:hover {
+        color: rgb(25, 0, 11);
       }
     </style>
 
