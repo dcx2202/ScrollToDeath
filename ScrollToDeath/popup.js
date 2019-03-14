@@ -27,15 +27,18 @@ var quote = document.getElementById("randomQuote");
 quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
 
 var settingsButton = document.getElementById("settingsButton");
-var trackWebsite = document.getElementById("trackButton");
-var removeWebsite = document.getElementById("removeButton");
+var trackButton = document.getElementById("trackButton");
+var removeButton = document.getElementById("removeButton");
 
 settingsButton.onclick = function()
 {
     console.log("settings menu");
+
+    var url = chrome.runtime.getURL("options.html");
+    chrome.tabs.create({"url": url});
 }
 
-trackbutton.onclick = function()
+trackButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         console.log("Tracking website " + tabs[0].url);
