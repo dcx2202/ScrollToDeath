@@ -3,6 +3,10 @@
     "version": "1.0",
     "description": "Scrolling will waste your life.",
     "manifest_version": 2,
+    "icons": { "16": "16x16.png",
+        "48": "48x48.png",
+       "128": "128x128.png" },
+
     "background": 
     {
         "scripts": 
