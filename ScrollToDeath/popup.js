@@ -35,24 +35,14 @@ settingsButton.onclick = function()
     console.log("settings menu");
 
     var url = chrome.runtime.getURL("options.html");
-    //chrome.tabs.create({"url": url});
-    chrome.storage.sync.clear();
+    chrome.tabs.create({"url": url});
 }
 
 trackButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
-        var current_url = tabs[0].url;
-
-        if(current_url.startsWith("http"))
-        {
-            var splits = current_url.split("://");
-
-            current_url = splits[0] + "://" + splits[1].split("/")[0];
-        }
-        else
-            current_url = current_url.split("/")[0];
+        var current_url = getURLNoPath(tabs[0].url);
 
         var urls = [];
 
@@ -67,15 +57,12 @@ trackButton.onclick = function()
 
                 urls[urls.length] = current_url;
 
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {
-                    
-                  });
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
             }
             else
             {
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {
-                    
-                });
+                urls[0] = current_url;
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
             }
           });
     });
@@ -84,11 +71,41 @@ trackButton.onclick = function()
 removeButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        console.log("Removed website " + tabs[0].url);
+        
+        
+        var current_url = getURLNoPath(tabs[0].url);
+
+        var urls = [];
+
+        chrome.storage.sync.get(['tracked_urls'], function(data) {
+            
+            if(data.tracked_urls != undefined)
+            {
+                urls = data.tracked_urls;
+
+                if(!urls.includes(current_url))
+                    return;
+
+                urls.splice(urls.indexOf(current_url), 1);
+
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
+            }
+          });
 
     });
 }
 
+function getURLNoPath(current_url)
+{
+    if(current_url.startsWith("http"))
+    {
+        var splits = current_url.split("://");
+
+        return splits[0] + "://" + splits[1].split("/")[0];
+    }
+    else
+        return current_url.split("/")[0];
+}
 
 chrome.storage.sync.get(['tracked_urls'], function(data) {
 
