@@ -57,12 +57,18 @@ trackButton.onclick = function()
 
                 urls[urls.length] = current_url;
 
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+
+                    alert(current_url + " is now being tracked");
+                });
             }
             else
             {
                 urls[0] = current_url;
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+
+                    alert(current_url + " is now being tracked");
+                });
             }
           });
     });
@@ -88,7 +94,10 @@ removeButton.onclick = function()
 
                 urls.splice(urls.indexOf(current_url), 1);
 
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {});
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+
+                    alert(current_url + " is no longer being tracked");
+                });
             }
           });
 
