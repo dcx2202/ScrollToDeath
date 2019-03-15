@@ -23,6 +23,9 @@ var quotes = [
     "\"It is named the \"Web\" for good reason."
 ]
 
+alertify.set('notifier','position', 'bottom-center');
+alertify.set('notifier','delay', 2);
+
 var quote = document.getElementById("randomQuote");
 quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
 
@@ -59,7 +62,7 @@ trackButton.onclick = function()
 
                 chrome.storage.sync.set({'tracked_urls': urls}, function() {
 
-                    alertify.set('notifier','position', 'top-center');
+                    alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
                 });
             }
@@ -68,7 +71,7 @@ trackButton.onclick = function()
                 urls[0] = current_url;
                 chrome.storage.sync.set({'tracked_urls': urls}, function() {
 
-                    alertify.set('notifier','position', 'top-center');
+                    alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
                 });
             }
@@ -98,7 +101,7 @@ removeButton.onclick = function()
 
                 chrome.storage.sync.set({'tracked_urls': urls}, function() {
 
-                    alertify.set('notifier','position', 'top-center');
+                    alertify.dismissAll();
                     alertify.error(current_url + " is no longer being tracked");
                 });
             }
