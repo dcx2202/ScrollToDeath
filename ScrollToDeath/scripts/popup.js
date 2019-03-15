@@ -99,7 +99,7 @@ removeButton.onclick = function()
                 chrome.storage.sync.set({'tracked_urls': urls}, function() {
 
                     alertify.set('notifier','position', 'top-center');
-                    alertify.success(current_url + " is no longer being tracked");
+                    alertify.error(current_url + " is no longer being tracked");
                 });
             }
           });
