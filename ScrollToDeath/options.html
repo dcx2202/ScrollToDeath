@@ -4,9 +4,19 @@
 
         <p>
             <img src="popup_icon.png" style="float:left;"/>
-            <h1 style="font-size: 25pt;padding-top: 25px;">ScrollToDeath Options</h1>
+            <h1 style="font-size: 25pt;padding-top: 25px;">ScrollToDeath Tracked Websites</h1>
         </p>
+        <button onclick="clearAll()">Clear All</button>
 
+        <script>
+
+            function clearAll()
+            {
+                chrome.storage.sync.set({'tracked_urls': []}, function() {
+                    
+                });
+            }           
+        </script>
 </body>
 
-</html>>
+</html>
