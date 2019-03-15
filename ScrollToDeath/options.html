@@ -2,14 +2,51 @@
 <head>
 </head>
 <body>
-
         <p>
             <img src="/resources/popup_icon.png" style="float:left;"/>
             <h1 style="font-size: 25pt;padding-top: 25px;">ScrollToDeath Tracked Websites</h1>
         </p>
-        <button id="clearButton">Clear All</button>
+    <br>
+        <button id="clearButton" style="float:right; margin-right: 50px;">Clear All</button>
 
-        <script type="text/javascript" src="/scripts/options.js"></script>
+    <br><br><br><br><br><br>
+
+    <ul id="myItemList">
+
+    </ul>
+
+    <script type="text/javascript" src="/scripts/options.js"></script>
 </body>
+
+<style>
+    body
+    {
+        position: absolute;
+        left: 30%;
+        background-color: rgb(160, 173, 185);
+        width: 40%;
+    }
+
+    button {
+        color: black;
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: rgb(150, 150, 143);
+      }
+    
+    button:hover {
+        color: white;
+        background-color: rgb(36, 36, 35);
+    }
+
+    ul{
+        margin-left: 40px;
+        font-size: 20px;
+        list-style-type:none;
+    }
+</style>
 
 </html>
