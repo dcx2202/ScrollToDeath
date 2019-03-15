@@ -1,9 +1,9 @@
 <!DOCTYPE html>
   <html>
     <body>
-      <input type="button" id="settingsButton" onclick="settings()" style="background: url(settings_icon.png) no-repeat; border: none; width:24px; height:24px; float: right; cursor: pointer;"></button>
+      <input type="button" id="settingsButton" onclick="settings()" style="background: url(/resources/settings_icon.png) no-repeat; border: none; width:24px; height:24px; float: right; cursor: pointer;"></button>
       <p>
-          <img src="popup_icon.png" style="float:left;"/>
+          <img src="/resources/popup_icon.png" style="float:left;"/>
           <h1 style="font-size: 25pt;padding-top: 25px;">ScrollToDeath</h1>
       </p>
       <p>
@@ -19,7 +19,13 @@
         </p>
       </div>
 
-      <script src="popup.js"></script>
+      <script src="/libs/alertify.min.js"></script>
+      <!-- include the style -->
+      <link rel="stylesheet" href="/styles/alertify.min.css" />
+      <!-- include a theme -->
+      <link rel="stylesheet" href="/styles/default.min.css" />
+      <script src="/scripts/popup.js"></script>
+      
     </body>
 
 
