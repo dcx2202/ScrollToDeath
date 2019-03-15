@@ -35,14 +35,49 @@ settingsButton.onclick = function()
     console.log("settings menu");
 
     var url = chrome.runtime.getURL("options.html");
-    chrome.tabs.create({"url": url});
+    //chrome.tabs.create({"url": url});
+    chrome.storage.sync.clear();
 }
 
 trackButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        console.log("Tracking website " + tabs[0].url);
 
+        var current_url = tabs[0].url;
+
+        if(current_url.startsWith("http"))
+        {
+            var splits = current_url.split("://");
+
+            current_url = splits[0] + "://" + splits[1].split("/")[0];
+        }
+        else
+            current_url = current_url.split("/")[0];
+
+        var urls = [];
+
+        chrome.storage.sync.get(['tracked_urls'], function(data) {
+            
+            if(data.tracked_urls != undefined)
+            {
+                urls = data.tracked_urls;
+
+                if(urls.includes(current_url))
+                    return;
+
+                urls[urls.length] = current_url;
+
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+                    
+                  });
+            }
+            else
+            {
+                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+                    
+                });
+            }
+          });
     });
 }
 
@@ -53,3 +88,10 @@ removeButton.onclick = function()
 
     });
 }
+
+
+chrome.storage.sync.get(['tracked_urls'], function(data) {
+
+
+    console.log(data);
+});
