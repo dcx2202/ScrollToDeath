@@ -16,11 +16,17 @@ clearButton.onclick = function clearAll()
         
             alertify.dismissAll();
             alertify.success("No longer tracking " + urls.length + " websites.");
+            setTimeout(function(){ 
+
+                window.location.reload();
+            }, 2000);
         });
     });
 }
 
 var urls = [];
+
+var back = false;
 
 chrome.storage.sync.get(['tracked_urls'], function(data){
     urls = data.tracked_urls;
@@ -38,5 +44,10 @@ chrome.storage.sync.get(['tracked_urls'], function(data){
         ul.appendChild(li);
     
         li.innerHTML += url;
+
+        if(back)
+            li.style.backgroundColor = "#BDBDBD";
+        
+        back = !back;
     });
 });
