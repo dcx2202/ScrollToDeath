@@ -7,6 +7,13 @@
         "48": "/resources/48x48.png",
        "128": "/resources/128x128.png" },
 
+    "content_scripts": 
+    [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["/scripts/content.js"]
+        }
+    ],
     "background": 
     {
         "scripts": 
@@ -20,8 +27,13 @@
         "default_popup": "popup.html",
         "default_title": "ScrollToDeath"
     },
-    "permissions": [
+    "permissions": 
+    [
         "storage",
         "tabs"
-      ]
+    ],
+    "web_accessible_resources":
+    [
+        "/resources/images/*.png"
+    ]
 }

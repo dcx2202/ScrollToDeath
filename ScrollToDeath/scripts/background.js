@@ -81,5 +81,9 @@ setInterval(function(){
   {
     timer_time++;
     chrome.storage.sync.set({'timer': timer_time}, function() {});
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+
+      chrome.tabs.sendMessage(tabs[0].id, {msg: timer_time});
+    });
   }
 }, 1000);
