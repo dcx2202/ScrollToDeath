@@ -3,11 +3,14 @@
 </head>
 <body>
         <p>
-            <img src="/resources/popup_icon.png" style="float:left; padding-left: 30px;"/>
-            <h1 style="font-size: 25pt;padding-top: 25px; text-align: right; margin-right: 130px;">ScrollToDeath Tracked Websites</h1>
+            <img src="/resources/popup_icon.png" style="float:left; padding-left: 7%;"/>
+            <h1 style="font-size: 25pt;padding-top: 25px; text-align: right; margin-right: 15%; color: white">ScrollToDeath Tracked Websites</h1>
         </p>
-    <br>
-        <button id="clearButton" style="float:right; margin-right: 50px;">Clear All</button>
+    <br><br><br>
+        <h1 style="float:left; color:white; font-size: 20pt; margin-left: 11%;">Limit:</h1>
+        <input type="time" id="limit" name="appt" step="1" style="float:left;" min="00:00:00" required/>
+        <input type="button" id="saveLimit" onclick="showUser()" style="float:left; margin-left: 1%; margin-top: 15px; background: url(/resources/selected_icon.png) no-repeat; cursor: pointer; width:45px; height:45px;"/>
+        <button id="clearButton" style="float:right; margin-right: 11%; margin-top: 15px;">Clear All</button>
 
     <br><br><br><br><br><br>
 
@@ -38,6 +41,19 @@
         cursor: pointer;
         border-radius: 5px;
         background-color: rgb(150, 150, 143);
+      }
+
+      input {
+        color: black;
+        font-size: 16px;
+        padding: 10px 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: rgb(150, 150, 143);
+        outline: none;
+        margin-left: 2%;
+        margin-top: 15px;
       }
     
     button:hover {
