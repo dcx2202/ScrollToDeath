@@ -1,8 +1,3 @@
-var ratio = 0;
-var closeNudgeActive = false;
-var tryCloseNudgeActive = false;
-var imagesNudgeActive = false;
-var wordsNudgeActive = false;
 
 let filenames = [
 
@@ -34,79 +29,8 @@ let filenames = [
     "image_26.png"
 ];
 
-chrome.runtime.onMessage.addListener(function(message, sender, response){
-
-    var timer = message.msg;
-
-    chrome.storage.local.get(['time_limit'], function(data){
-
-        var timer_limit = data.time_limit.split(":");
-
-        var time_limit = parseInt(timer_limit[0]) * 3600;
-        time_limit += parseInt(timer_limit[1]) * 60;
-        time_limit += parseInt(timer_limit[2]);
-
-        if(time_limit == 0)
-            return;
-
-        ratio = parseInt(timer) / time_limit;
-
-
-        if(ratio > 2)
-            closeNudge();
-        else if(ratio > 1.6)
-        {
-            tryCloseNudge();
-            closeNudgeActive = false;
-        }
-        else if(ratio > 1.3)
-        {
-            changeImagesNudge();
-            closeNudgeActive = false;
-            tryCloseNudgeActive = false;
-        }
-        else if(ratio > 1)
-        {
-            changeWordsNudge();
-            closeNudgeActive = false;
-            tryCloseNudgeActive = false;
-            imagesNudgeActive = false;
-        }
-        else
-        {
-            closeNudgeActive = false;
-            tryCloseNudgeActive = false;
-            imagesNudgeActive = false;
-            wordsNudgeActive = false;
-        }
-    })
-})
-
-function closeNudge()
-{
-    if(closeNudgeActive)
-        return;
-
-        chrome.runtime.sendMessage({msg: "close_tracked_tabs"});
-
-    closeNudgeActive = true;
-}
-
-function tryCloseNudge()
-{
-    if(tryCloseNudgeActive)
-        return;
-
-    //
-
-    tryCloseNudgeActive = true;
-}
-
 function changeImagesNudge()
 {
-    if(imagesNudgeActive)
-        return;
-
     var images = document.getElementsByTagName('img');
 
     for(image of images)
@@ -114,15 +38,10 @@ function changeImagesNudge()
         var img = filenames[Math.floor(Math.random() * filenames.length)];
         image.src = chrome.extension.getURL("/resources/images/" + img);
     }
-
-    imagesNudgeActive = true;
 }
 
 function changeWordsNudge()
 {
-    if(wordsNudgeActive)
-        return;
-
     var change = "<strong style=\"background-color: rgba(255, 255, 0, 60);\">";
     var patterns = ["time", "waste", "procrastinate", "work", "productivity", "productive", "stop", "lazy", "outdoors", "effort", "hours", "minutes", "seconds", "labor", "try"];
 
@@ -142,6 +61,12 @@ function changeWordsNudge()
             paragraph.innerHTML = str;
         }
     }
-
-    wordsNudgeActive = true;
 }
+
+chrome.runtime.onMessage.addListener(function(message, sender, response){
+
+    if(message.msg === "change_images_nudge")
+        changeImagesNudge();
+    else if(message.msg === "change_words_nudge")
+        changeWordsNudge();
+})

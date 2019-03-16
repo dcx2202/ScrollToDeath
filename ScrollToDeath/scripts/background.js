@@ -1,7 +1,17 @@
+var ratio = 0;
+var closeNudgeActive = false;
+var tryCloseNudgeActive = false;
+var imagesNudgeActive = false;
+var wordsNudgeActive = false;
 
 var timer_time;
 var tracked = false;
 
+chrome.storage.local.get(['time_limit'], function(data){
+
+  if(data.time_limit == undefined)
+    chrome.storage.local.set({'time_limit': "01:00:00"}, function(){});
+});
 
 chrome.storage.local.get(['timer'], function(data){
 
@@ -10,7 +20,7 @@ chrome.storage.local.get(['timer'], function(data){
 
   if(timer_time == undefined)
   {
-    chrome.storage.local.set({'timer': 0}, function() {});
+    chrome.storage.local.set({'timer': 0}, function(){});
     timer_time = 0;
   }
 
@@ -30,29 +40,11 @@ chrome.storage.local.get(['timer'], function(data){
     });
   })
 
+  // When a message is received
   chrome.runtime.onMessage.addListener(function(message, sender, response){
 
-    if(message.msg === "tracked_urls_changed")
+    if(message.msg === "tracked_urls_changed") // Tracked URLs changed
       processURLS();
-    else if (message.msg === "close_tracked_tabs") {
-
-      chrome.storage.local.get(['tracked_urls'], function (data) {
-    
-        tracked_urls = data.tracked_urls;
-        var tracked_tabs = [];
-      
-        chrome.tabs.query({ currentWindow: true }, function (tabs) {
-      
-          for (url of tracked_urls) {
-            for (tab of tabs) {
-              if (tab.url.startsWith(url))
-              tracked_tabs.push(tab.id);
-            }
-          }
-          chrome.tabs.remove(tracked_tabs, function(){});
-        });
-      });
-    }
   })
 });
 
@@ -100,9 +92,104 @@ setInterval(function(){
   {
     timer_time++;
     chrome.storage.local.set({'timer': timer_time}, function() {});
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-
-      chrome.tabs.sendMessage(tabs[0].id, {msg: timer_time});
-    })
   }
+
+  chrome.storage.local.get(['time_limit'], function(data){
+
+    var timer_limit = data.time_limit.split(":");
+
+    var time_limit = parseInt(timer_limit[0]) * 3600;
+    time_limit += parseInt(timer_limit[1]) * 60;
+    time_limit += parseInt(timer_limit[2]);
+
+    if(time_limit == 0)
+        return;
+
+    ratio = timer_time / time_limit;
+
+    if(ratio > 2)
+    {
+      if(closeNudgeActive)
+        return;
+
+      closeNudge();
+
+      closeNudgeActive = true;
+    }
+    else if(ratio > 1.6)
+    {
+      if(tryCloseNudgeActive)
+        return;
+
+      tryCloseNudge();
+      
+      tryCloseNudgeActive = true;
+      closeNudgeActive = false;
+    }
+    else if(ratio > 1.3)
+    {
+      if(imagesNudgeActive)
+        return;
+
+      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+
+        chrome.tabs.sendMessage(tabs[0].id, {msg: "change_images_nudge"});
+        imagesNudgeActive = true;
+      })
+      closeNudgeActive = false;
+      tryCloseNudgeActive = false;
+    }
+    else if(ratio > 1)
+    {
+      if(wordsNudgeActive)
+        return;
+
+      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+
+        console.log(tabs);
+        chrome.tabs.sendMessage(tabs[0].id, {msg: "change_words_nudge"});
+        wordsNudgeActive = true;
+      })
+      closeNudgeActive = false;
+      tryCloseNudgeActive = false;
+      imagesNudgeActive = false;
+    }
+    else
+    {
+      closeNudgeActive = false;
+      tryCloseNudgeActive = false;
+      imagesNudgeActive = false;
+      wordsNudgeActive = false;
+    }
+  })
 }, 1000);
+
+function closeNudge()
+{
+  chrome.storage.local.get(['tracked_urls'], function (data) {
+
+    tracked_urls = data.tracked_urls;
+    var tracked_tabs = [];
+  
+    chrome.tabs.query({ currentWindow: true }, function (tabs) {
+  
+      for (url of tracked_urls) {
+        for (tab of tabs) {
+          if (tab.url.startsWith(url))
+          tracked_tabs.push(tab.id);
+        }
+      }
+      chrome.tabs.remove(tracked_tabs, function(){});
+    });
+  });
+}
+
+function tryCloseNudge()
+{
+    var result = confirm("Close unproductive tabs? :'(");
+
+    if(result)
+      closeNudge();
+    else
+      setTimeout(tryCloseNudge, 600000);
+}
