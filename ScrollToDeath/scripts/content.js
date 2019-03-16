@@ -30,7 +30,7 @@ function changeImagesNudge()
 
     for(image of images)
     {
-        image.
+        //image.
     }
 }
 
