@@ -2,6 +2,9 @@ alertify.set('notifier','position', 'bottom-center');
 alertify.set('notifier','delay', 2);
 
 var clearButton = document.getElementById("clearButton");
+document.getElementById("limit").defaultValue = "00:00:00";
+var limit = document.getElementById("limit");
+var saveLimit = document.getElementById("saveLimit");
 
 clearButton.onclick = function clearAll()
 {
@@ -55,3 +58,33 @@ chrome.storage.sync.get(['tracked_urls'], function(data){
         back = !back;
     });
 });
+
+saveLimit.onclick = function saveLimit()
+{
+    var current = limit.value;
+
+    if(current.split(":").length < 3)
+        current = current + ":00";
+
+    chrome.storage.sync.get(['time_limit'], function(data) {
+    
+        if(data.time_limit != undefined)
+        {
+            chrome.storage.sync.set({'time_limit': current}, function() {
+
+                alertify.dismissAll();
+                alertify.success("New time limit defined");
+                console.log(current);
+            });
+        }
+        else
+        {
+            chrome.storage.sync.set({'time_limit': urls}, function() {
+
+                alertify.dismissAll();
+                alertify.success("New time limit defined");
+                console.log(current);
+            });
+        }
+    });
+} 

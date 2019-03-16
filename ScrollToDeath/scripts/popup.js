@@ -35,8 +35,12 @@ var removeButton = document.getElementById("removeButton");
 var timer = document.getElementById("timer");
 
 chrome.storage.sync.get(['timer'], function(data) {
-        
-    timer.innerHTML = formatSeconds(data.timer) + "/00:00:00";
+    
+    chrome.storage.sync.get(['time_limit'], function(data2)
+    {
+        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2.time_limit;
+    })
+
 })
 
 settingsButton.onclick = function()
@@ -156,6 +160,9 @@ setInterval(function(){
 
     chrome.storage.sync.get(['timer'], function(data) {
         
-        timer.innerHTML = formatSeconds(data.timer) + "/00:00:00";
+        chrome.storage.sync.get(['time_limit'], function(data2)
+    {
+        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2.time_limit;
+    })
     })
 }, 1000);
