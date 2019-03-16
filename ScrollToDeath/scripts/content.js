@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, response){
 
     var timer = message.msg;
 
-    chrome.storage.sync.get(['time_limit'], function(data){
+    chrome.storage.local.get(['time_limit'], function(data){
 
         var timer_limit = data.time_limit.split(":");
 

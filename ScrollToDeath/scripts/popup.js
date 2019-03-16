@@ -33,20 +33,14 @@ var settingsButton = document.getElementById("settingsButton");
 var trackButton = document.getElementById("trackButton");
 var removeButton = document.getElementById("removeButton");
 var timer = document.getElementById("timer");
-var icon = document.getElementById("icon");
 
-icon.onclick = function()
-{
-    chrome.storage.sync.clear();
-}
-
-chrome.storage.sync.get(['timer'], function(data) {
+chrome.storage.local.get(['timer'], function(data) {
     
-    chrome.storage.sync.get(['time_limit'], function(data2)
+    chrome.storage.local.get(['time_limit'], function(data2)
     {
         if(data2.time_limit == undefined)
         {
-            chrome.storage.sync.set({'time_limit': "01:00:00"}, function() {});
+            chrome.storage.local.set({'time_limit': "01:00:00"}, function() {});
             var data2 = "01:00:00";
         }
         else
@@ -73,7 +67,7 @@ trackButton.onclick = function()
 
         var urls = [];
 
-        chrome.storage.sync.get(['tracked_urls'], function(data) {
+        chrome.storage.local.get(['tracked_urls'], function(data) {
             
             if(data.tracked_urls != undefined)
             {
@@ -88,7 +82,7 @@ trackButton.onclick = function()
 
                 urls[urls.length] = current_url;
 
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+                chrome.storage.local.set({'tracked_urls': urls}, function() {
 
                     alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
@@ -98,7 +92,7 @@ trackButton.onclick = function()
             else
             {
                 urls[0] = current_url;
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+                chrome.storage.local.set({'tracked_urls': urls}, function() {
 
                     alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
@@ -118,7 +112,7 @@ removeButton.onclick = function()
 
         var urls = [];
 
-        chrome.storage.sync.get(['tracked_urls'], function(data) {
+        chrome.storage.local.get(['tracked_urls'], function(data) {
             
             if(data.tracked_urls != undefined)
             {
@@ -133,7 +127,7 @@ removeButton.onclick = function()
 
                 urls.splice(urls.indexOf(current_url), 1);
 
-                chrome.storage.sync.set({'tracked_urls': urls}, function() {
+                chrome.storage.local.set({'tracked_urls': urls}, function() {
 
                     alertify.dismissAll();
                     alertify.error(current_url + " is no longer being tracked");
@@ -157,7 +151,7 @@ function getURLNoPath(current_url)
         return current_url.split("/")[0];
 }
 
-chrome.storage.sync.get(['tracked_urls'], function(data) {
+chrome.storage.local.get(['tracked_urls'], function(data) {
 
 
     console.log(data);
@@ -172,13 +166,13 @@ function formatSeconds(seconds)
 
 setInterval(function(){
 
-    chrome.storage.sync.get(['timer'], function(data) {
+    chrome.storage.local.get(['timer'], function(data) {
         
-        chrome.storage.sync.get(['time_limit'], function(data2)
+        chrome.storage.local.get(['time_limit'], function(data2)
         {
             if(data2.time_limit == undefined)
             {
-                chrome.storage.sync.set({'time_limit': "01:00:00"}, function() {});
+                chrome.storage.local.set({'time_limit': "01:00:00"}, function() {});
                 var data2 = "01:00:00";
             }
             else

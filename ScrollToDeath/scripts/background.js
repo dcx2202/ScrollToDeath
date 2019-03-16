@@ -3,14 +3,14 @@ var timer_time;
 var tracked = false;
 
 
-chrome.storage.sync.get(['timer'], function(data){
+chrome.storage.local.get(['timer'], function(data){
 
   // Get the total time
   timer_time = data.timer;
 
   if(timer_time == undefined)
   {
-    chrome.storage.sync.set({'timer': 0}, function() {});
+    chrome.storage.local.set({'timer': 0}, function() {});
     timer_time = 0;
   }
 
@@ -40,7 +40,7 @@ chrome.storage.sync.get(['timer'], function(data){
 function processURLS()
 {
   // Get the tracked urls
-  chrome.storage.sync.get(['tracked_urls'], function(data) {
+  chrome.storage.local.get(['tracked_urls'], function(data) {
         
     var tracked_urls = data.tracked_urls;
 
@@ -80,7 +80,7 @@ setInterval(function(){
   if(tracked)
   {
     timer_time++;
-    chrome.storage.sync.set({'timer': timer_time}, function() {});
+    chrome.storage.local.set({'timer': timer_time}, function() {});
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
       chrome.tabs.sendMessage(tabs[0].id, {msg: timer_time});

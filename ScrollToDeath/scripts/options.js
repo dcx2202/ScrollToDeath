@@ -8,7 +8,7 @@ var saveLimit = document.getElementById("saveLimit");
 
 clearButton.onclick = function clearAll()
 {
-    chrome.storage.sync.get(['tracked_urls'], function(data){
+    chrome.storage.local.get(['tracked_urls'], function(data){
         
         urls = data.tracked_urls;
 
@@ -19,7 +19,7 @@ clearButton.onclick = function clearAll()
             return;
         }
 
-        chrome.storage.sync.set({'tracked_urls': []}, function() {
+        chrome.storage.local.set({'tracked_urls': []}, function() {
         
             alertify.dismissAll();
             alertify.success("No longer tracking " + urls.length + " websites.");
@@ -35,7 +35,7 @@ var urls = [];
 
 var back = false;
 
-chrome.storage.sync.get(['tracked_urls'], function(data){
+chrome.storage.local.get(['tracked_urls'], function(data){
     urls = data.tracked_urls;
 
     if(urls.length == 0)
@@ -66,11 +66,11 @@ saveLimit.onclick = function saveLimit()
     if(current.split(":").length < 3)
         current = current + ":00";
 
-    chrome.storage.sync.get(['time_limit'], function(data) {
+    chrome.storage.local.get(['time_limit'], function(data) {
     
         if(data.time_limit != undefined)
         {
-            chrome.storage.sync.set({'time_limit': current}, function() {
+            chrome.storage.local.set({'time_limit': current}, function() {
 
                 alertify.dismissAll();
                 alertify.success("New time limit defined");
@@ -79,7 +79,7 @@ saveLimit.onclick = function saveLimit()
         }
         else
         {
-            chrome.storage.sync.set({'time_limit': current}, function() {
+            chrome.storage.local.set({'time_limit': current}, function() {
 
                 alertify.dismissAll();
                 alertify.success("New time limit defined");
