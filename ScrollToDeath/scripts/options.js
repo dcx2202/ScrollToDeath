@@ -10,7 +10,11 @@ clearButton.onclick = function clearAll()
         urls = data.tracked_urls;
 
         if(urls.length == 0)
+        {
+            alertify.dismissAll();
+            alertify.warning("No websites are being tracked.");
             return;
+        }
 
         chrome.storage.sync.set({'tracked_urls': []}, function() {
         

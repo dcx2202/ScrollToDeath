@@ -32,6 +32,12 @@ quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
 var settingsButton = document.getElementById("settingsButton");
 var trackButton = document.getElementById("trackButton");
 var removeButton = document.getElementById("removeButton");
+var timer = document.getElementById("timer");
+
+chrome.storage.sync.get(['timer'], function(data) {
+        
+    timer.innerHTML = formatSeconds(data.timer) + "/00:00:00";
+})
 
 settingsButton.onclick = function()
 {
@@ -56,7 +62,11 @@ trackButton.onclick = function()
                 urls = data.tracked_urls;
 
                 if(urls.includes(current_url))
+                {
+                    alertify.dismissAll();
+                    alertify.warning(current_url + " is already being tracked");
                     return;
+                }
 
                 urls[urls.length] = current_url;
 
@@ -64,6 +74,7 @@ trackButton.onclick = function()
 
                     alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
+                    chrome.runtime.sendMessage({msg: "tracked_urls_changed"});
                 });
             }
             else
@@ -73,6 +84,7 @@ trackButton.onclick = function()
 
                     alertify.dismissAll();
                     alertify.success(current_url + " is now being tracked");
+                    chrome.runtime.sendMessage({msg: "tracked_urls_changed"});
                 });
             }
           });
@@ -95,7 +107,11 @@ removeButton.onclick = function()
                 urls = data.tracked_urls;
 
                 if(!urls.includes(current_url))
+                {
+                    alertify.dismissAll();
+                    alertify.warning(current_url + " is not being tracked");
                     return;
+                }
 
                 urls.splice(urls.indexOf(current_url), 1);
 
@@ -103,6 +119,7 @@ removeButton.onclick = function()
 
                     alertify.dismissAll();
                     alertify.error(current_url + " is no longer being tracked");
+                    chrome.runtime.sendMessage({msg: "tracked_urls_changed"});
                 });
             }
           });
@@ -127,3 +144,18 @@ chrome.storage.sync.get(['tracked_urls'], function(data) {
 
     console.log(data);
 });
+
+function formatSeconds(seconds)
+{
+    var date = new Date(1970,0,1);
+    date.setSeconds(seconds);
+    return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+}
+
+setInterval(function(){
+
+    chrome.storage.sync.get(['timer'], function(data) {
+        
+        timer.innerHTML = formatSeconds(data.timer) + "/00:00:00";
+    })
+}, 1000);
