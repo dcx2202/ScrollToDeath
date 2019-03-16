@@ -2,7 +2,7 @@ alertify.set('notifier','position', 'bottom-center');
 alertify.set('notifier','delay', 2);
 
 var clearButton = document.getElementById("clearButton");
-document.getElementById("limit").defaultValue = "00:00:00";
+document.getElementById("limit").defaultValue = "01:00:00";
 var limit = document.getElementById("limit");
 var saveLimit = document.getElementById("saveLimit");
 
@@ -79,7 +79,7 @@ saveLimit.onclick = function saveLimit()
         }
         else
         {
-            chrome.storage.sync.set({'time_limit': urls}, function() {
+            chrome.storage.sync.set({'time_limit': current}, function() {
 
                 alertify.dismissAll();
                 alertify.success("New time limit defined");

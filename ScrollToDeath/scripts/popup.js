@@ -33,12 +33,26 @@ var settingsButton = document.getElementById("settingsButton");
 var trackButton = document.getElementById("trackButton");
 var removeButton = document.getElementById("removeButton");
 var timer = document.getElementById("timer");
+var icon = document.getElementById("icon");
+
+icon.onclick = function()
+{
+    chrome.storage.sync.clear();
+}
 
 chrome.storage.sync.get(['timer'], function(data) {
     
     chrome.storage.sync.get(['time_limit'], function(data2)
     {
-        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2.time_limit;
+        if(data2.time_limit == undefined)
+        {
+            chrome.storage.sync.set({'time_limit': "01:00:00"}, function() {});
+            var data2 = "01:00:00";
+        }
+        else
+            data2 = data2.time_limit;
+
+        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2;
     })
 
 })
@@ -161,8 +175,16 @@ setInterval(function(){
     chrome.storage.sync.get(['timer'], function(data) {
         
         chrome.storage.sync.get(['time_limit'], function(data2)
-    {
-        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2.time_limit;
-    })
+        {
+            if(data2.time_limit == undefined)
+            {
+                chrome.storage.sync.set({'time_limit': "01:00:00"}, function() {});
+                var data2 = "01:00:00";
+            }
+            else
+                data2 = data2.time_limit;
+
+            timer.innerHTML = formatSeconds(data.timer) + "/" +  data2;
+        })
     })
 }, 1000);
