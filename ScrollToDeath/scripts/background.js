@@ -34,6 +34,25 @@ chrome.storage.local.get(['timer'], function(data){
 
     if(message.msg === "tracked_urls_changed")
       processURLS();
+    else if (message.msg === "close_tracked_tabs") {
+
+      chrome.storage.local.get(['tracked_urls'], function (data) {
+    
+        tracked_urls = data.tracked_urls;
+        var tracked_tabs = [];
+      
+        chrome.tabs.query({ currentWindow: true }, function (tabs) {
+      
+          for (url of tracked_urls) {
+            for (tab of tabs) {
+              if (tab.url.startsWith(url))
+              tracked_tabs.push(tab.id);
+            }
+          }
+          chrome.tabs.remove(tracked_tabs, function(){});
+        });
+      });
+    }
   })
 });
 
@@ -84,6 +103,6 @@ setInterval(function(){
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
       chrome.tabs.sendMessage(tabs[0].id, {msg: timer_time});
-    });
+    })
   }
 }, 1000);

@@ -52,20 +52,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, response){
         ratio = parseInt(timer) / time_limit;
 
 
-        if(ratio > 2.5)
+        if(ratio > 2)
             closeNudge();
-        else if(ratio > 2)
+        else if(ratio > 1.6)
         {
             tryCloseNudge();
             closeNudgeActive = false;
         }
-        else if(ratio > 2)
+        else if(ratio > 1.3)
         {
             changeImagesNudge();
             closeNudgeActive = false;
             tryCloseNudgeActive = false;
         }
-        else if(ratio > 0)
+        else if(ratio > 1)
         {
             changeWordsNudge();
             closeNudgeActive = false;
@@ -87,7 +87,7 @@ function closeNudge()
     if(closeNudgeActive)
         return;
 
-    //
+        chrome.runtime.sendMessage({msg: "close_tracked_tabs"});
 
     closeNudgeActive = true;
 }

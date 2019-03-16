@@ -53,8 +53,6 @@ chrome.storage.local.get(['timer'], function(data) {
 
 settingsButton.onclick = function()
 {
-    console.log("settings menu");
-
     var url = chrome.runtime.getURL("options.html");
     chrome.tabs.create({"url": url});
 }
@@ -151,11 +149,7 @@ function getURLNoPath(current_url)
         return current_url.split("/")[0];
 }
 
-chrome.storage.local.get(['tracked_urls'], function(data) {
-
-
-    console.log(data);
-});
+chrome.storage.local.get(['tracked_urls'], function(data) {});
 
 function formatSeconds(seconds)
 {

@@ -74,7 +74,6 @@ saveLimit.onclick = function saveLimit()
 
                 alertify.dismissAll();
                 alertify.success("New time limit defined");
-                console.log(current);
             });
         }
         else
@@ -83,7 +82,6 @@ saveLimit.onclick = function saveLimit()
 
                 alertify.dismissAll();
                 alertify.success("New time limit defined");
-                console.log(current);
             });
         }
     });
