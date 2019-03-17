@@ -55,11 +55,11 @@ function changeWordsNudge()
         for(pattern of patterns)
         {
             var str = element.innerHTML;
-            str = str.replace(pattern, change + pattern + "</strong>");
+            str = str.replace(" " + pattern + " ", " " + change + pattern + "</strong>" + " ");
 
             var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
 
-            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+            str = str.replace(" " + upper_pattern + " ", " " + change + upper_pattern + "</strong>" + " ");
 
             element.innerHTML = str;
         }
@@ -72,11 +72,11 @@ function changeWordsNudge()
         for(pattern of patterns)
         {
             var str = element.innerHTML;
-            str = str.replace(pattern, change + pattern + "</strong>");
+            str = str.replace(" " + pattern + " ", " " + change + pattern + "</strong>" + " ");
 
             var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
 
-            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+            str = str.replace(" " + upper_pattern + " ", " " + change + upper_pattern + "</strong>" + " ");
 
             element.innerHTML = str;
         }
@@ -89,11 +89,11 @@ function changeWordsNudge()
         for(pattern of patterns)
         {
             var str = element.innerHTML;
-            str = str.replace(pattern, change + pattern + "</strong>");
+            str = str.replace(" " + pattern + " ", " " + change + pattern + "</strong>" + " ");
 
             var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
 
-            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+            str = str.replace(" " + upper_pattern + " ", " " + change + upper_pattern + "</strong>" + " ");
 
             element.innerHTML = str;
         }
@@ -106,11 +106,11 @@ function changeWordsNudge()
         for(pattern of patterns)
         {
             var str = element.innerHTML;
-            str = str.replace(pattern, change + pattern + "</strong>");
+            str = str.replace(" " + pattern + " ", " " + change + pattern + "</strong>" + " ");
 
             var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
 
-            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+            str = str.replace(" " + upper_pattern + " ", " " + change + upper_pattern + "</strong>" + " ");
 
             element.innerHTML = str;
         }

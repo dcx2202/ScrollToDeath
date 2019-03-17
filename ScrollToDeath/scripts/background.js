@@ -13,6 +13,12 @@ chrome.storage.local.get(['time_limit'], function(data){
     chrome.storage.local.set({'time_limit': "01:00:00"}, function(){});
 });
 
+chrome.storage.local.get(['tracked_urls'], function(data){
+
+  if(data.tracked_urls == undefined)
+    chrome.storage.local.set({'tracked_urls': []}, function(){});
+});
+
 chrome.storage.local.get(['timer'], function(data){
 
   // Get the total time
@@ -38,7 +44,7 @@ chrome.storage.local.get(['timer'], function(data){
 
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
-      if(tabs[0].url != "chrome-extension://bbpbpalmabjemgfacpmiehcpcejgofii/options.html")
+      if(tabs[0].url != chrome.extension.getURL("options.html"))
       {
         processURLS();
         wordsNudgeActive = false;
@@ -75,7 +81,7 @@ function processURLS()
       var url = tabs[0].url + "";
       
       // If it's the options page we want to refresh it to display the up to date tracked websites list
-      if(url === "chrome-extension://bbpbpalmabjemgfacpmiehcpcejgofii/options.html")
+      if(url === chrome.extension.getURL("options.html"))
         chrome.tabs.reload(tabs[0].id);
 
       // For each of the tracked urls we check if this tab we are in currently is being tracked
@@ -154,7 +160,6 @@ setInterval(function(){
 
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
-        console.log(tabs);
         chrome.tabs.sendMessage(tabs[0].id, {msg: "change_words_nudge"});
         wordsNudgeActive = true;
       })
