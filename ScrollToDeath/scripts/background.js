@@ -19,6 +19,16 @@ chrome.storage.local.get(['tracked_urls'], function(data){
     chrome.storage.local.set({'tracked_urls': []}, function(){});
 });
 
+chrome.storage.local.get(['current_day'], function(data){
+
+  if(data.current_day == undefined)
+  {
+    var date = new Date().getDate();
+    chrome.storage.local.set({'timer': 0}, function(){});
+    chrome.storage.local.set({'current_day': date}, function(){});
+  }
+});
+
 chrome.storage.local.get(['timer'], function(data){
 
   // Get the total time
@@ -175,6 +185,17 @@ setInterval(function(){
       wordsNudgeActive = false;
     }
   })
+
+  chrome.storage.local.get(['current_day'], function(data){
+
+    var date = new Date().getDate();
+
+    if(data.current_day != date)
+    {
+      chrome.storage.local.set({'timer': 0}, function(){});
+      chrome.storage.local.set({'current_day': date}, function() {});
+    }
+  });
 }, 1000);
 
 function closeNudge()
