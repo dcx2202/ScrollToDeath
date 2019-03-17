@@ -24,6 +24,7 @@ chrome.storage.local.get(['current_day'], function(data){
   if(data.current_day == undefined)
   {
     var date = new Date().getDate();
+    timer_time = 0;
     chrome.storage.local.set({'timer': 0}, function(){});
     chrome.storage.local.set({'current_day': date}, function(){});
   }
@@ -192,6 +193,7 @@ setInterval(function(){
 
     if(data.current_day != date)
     {
+      timer_time = 0;
       chrome.storage.local.set({'timer': 0}, function(){});
       chrome.storage.local.set({'current_day': date}, function() {});
     }
