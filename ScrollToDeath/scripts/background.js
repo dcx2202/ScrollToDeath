@@ -28,6 +28,9 @@ chrome.storage.local.get(['timer'], function(data){
   chrome.tabs.onActivated.addListener(function(info) {
       
     processURLS();
+    wordsNudgeActive = false;
+    imagesNudgeActive = false;
+    closeNudgeActive = false;
   });
 
   // When the tab url changes
@@ -36,7 +39,12 @@ chrome.storage.local.get(['timer'], function(data){
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
       if(tabs[0].url != "chrome-extension://bbpbpalmabjemgfacpmiehcpcejgofii/options.html")
+      {
         processURLS();
+        wordsNudgeActive = false;
+        imagesNudgeActive = false;
+        closeNudgeActive = false;
+      }
     });
   })
 
@@ -186,10 +194,13 @@ function closeNudge()
 
 function tryCloseNudge()
 {
-    var result = confirm("Close unproductive tabs? :'(");
+  if(ratio < 1.6)
+    return;
 
-    if(result)
-      closeNudge();
-    else
-      setTimeout(tryCloseNudge, 600000);
+  var result = confirm("Close unproductive tabs? :'(");
+
+  if(result)
+    closeNudge();
+  else
+    setTimeout(tryCloseNudge, 600000);
 }

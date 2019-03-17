@@ -35,6 +35,9 @@ function changeImagesNudge()
 
     for(image of images)
     {
+        if(Math.random() > 0.2)
+            continue;
+
         var img = filenames[Math.floor(Math.random() * filenames.length)];
         image.src = chrome.extension.getURL("/resources/images/" + img);
     }
@@ -42,23 +45,74 @@ function changeImagesNudge()
 
 function changeWordsNudge()
 {
-    var change = "<strong style=\"background-color: rgba(255, 255, 0, 60);\">";
+    var change = "<strong style=\"background-color: rgba(255, 255, 0, 60); color: #000\">";
     var patterns = ["time", "waste", "procrastinate", "work", "productivity", "productive", "stop", "lazy", "outdoors", "effort", "hours", "minutes", "seconds", "labor", "try"];
 
-    var paragraphs = document.getElementsByTagName('p');
+    var elements = document.getElementsByTagName('p');
 
-    for(paragraph of paragraphs)
+    for(element of elements)
     {
         for(pattern of patterns)
         {
-            var str = paragraph.innerHTML;
+            var str = element.innerHTML;
             str = str.replace(pattern, change + pattern + "</strong>");
 
             var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
 
             str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
 
-            paragraph.innerHTML = str;
+            element.innerHTML = str;
+        }
+    }
+
+    elements = document.getElementsByTagName('h1');
+
+    for(element of elements)
+    {
+        for(pattern of patterns)
+        {
+            var str = element.innerHTML;
+            str = str.replace(pattern, change + pattern + "</strong>");
+
+            var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
+
+            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+
+            element.innerHTML = str;
+        }
+    }
+
+    elements = document.getElementsByTagName('h2');
+
+    for(element of elements)
+    {
+        for(pattern of patterns)
+        {
+            var str = element.innerHTML;
+            str = str.replace(pattern, change + pattern + "</strong>");
+
+            var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
+
+            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+
+            element.innerHTML = str;
+        }
+    }
+
+    elements = document.getElementsByTagName('h3');
+
+    for(element of elements)
+    {
+        for(pattern of patterns)
+        {
+            var str = element.innerHTML;
+            str = str.replace(pattern, change + pattern + "</strong>");
+
+            var upper_pattern = pattern.replace(pattern.charAt(0), pattern.charAt(0).toUpperCase())
+
+            str = str.replace(upper_pattern, change + upper_pattern + "</strong>");
+
+            element.innerHTML = str;
         }
     }
 }
