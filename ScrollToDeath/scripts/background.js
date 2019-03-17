@@ -164,7 +164,7 @@ setInterval(function(){
       closeNudgeActive = false;
       tryCloseNudgeActive = false;
     }
-    else if(ratio > 1)
+    else if(ratio > 0.8)
     {
       if(wordsNudgeActive)
         return;
