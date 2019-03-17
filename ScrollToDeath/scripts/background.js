@@ -228,7 +228,10 @@ function tryCloseNudge()
   var result = confirm("Close unproductive tabs? :'(");
 
   if(result)
+  {
     closeNudge();
+    tryCloseNudgeActive = false;
+  }
   else
     setTimeout(tryCloseNudge, 600000);
 }
