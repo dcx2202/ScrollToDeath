@@ -46,7 +46,33 @@ chrome.storage.local.get(['timer'], function(data) {
         else
             data2 = data2.time_limit;
 
-        timer.innerHTML = formatSeconds(data.timer) + "/" +  data2;
+
+        chrome.storage.local.get(['timer'], function(data){
+
+            var splits = data2.split(":");
+            var seconds = parseInt(splits[0]) * 3600 + parseInt(splits[1]) * 60 + parseInt(splits[2]);
+
+            var color;
+
+            if(seconds <= 0)
+            {
+                color = "color: #000000";
+                timer.innerHTML = "<strong style=\"" + color + "\">" + formatSeconds(data.timer) + "</strong><strong>/" +  data2 + "</strong>";
+                return;
+            }
+
+            var ratio = data.timer / seconds;
+
+            if(ratio >= 1)
+                color = "color: #ff0000";
+            else if(ratio > 0.7)
+                color = "color: #ff9900";
+            else
+                color = "color: #000000";
+
+            
+            timer.innerHTML = "<strong style=\"" + color + "\">" + formatSeconds(data.timer) + "</strong><strong>/" +  data2 + "</strong>";
+        });
     })
 
 })
@@ -172,7 +198,32 @@ setInterval(function(){
             else
                 data2 = data2.time_limit;
 
-            timer.innerHTML = formatSeconds(data.timer) + "/" +  data2;
+            chrome.storage.local.get(['timer'], function(data){
+
+                var splits = data2.split(":");
+                var seconds = parseInt(splits[0]) * 3600 + parseInt(splits[1]) * 60 + parseInt(splits[2]);
+    
+                var color;
+    
+                if(seconds <= 0)
+                {
+                    color = "color: #000000";
+                    timer.innerHTML = "<strong style=\"" + color + "\">" + formatSeconds(data.timer) + "</strong><strong>/" +  data2 + "</strong>";
+                    return;
+                }
+    
+                var ratio = data.timer / seconds;
+    
+                if(ratio >= 1)
+                    color = "color: #ff0000";
+                else if(ratio > 0.7)
+                    color = "color: #ff9900";
+                else
+                    color = "color: #000000";
+    
+                
+                timer.innerHTML = "<strong style=\"" + color + "\">" + formatSeconds(data.timer) + "</strong><strong>/" +  data2 + "</strong>";
+            });
         })
     })
 }, 1000);

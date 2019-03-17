@@ -46,7 +46,21 @@ function changeImagesNudge()
 function changeWordsNudge()
 {
     var change = "<strong style=\"background-color: rgba(255, 255, 0, 60); color: #000\">";
-    var patterns = ["time", "waste", "procrastinate", "work", "productivity", "productive", "stop", "lazy", "outdoors", "effort", "hours", "minutes", "seconds", "labor", "try"];
+    var patterns = ["time", "tempo",
+                    "waste", "desperdício",
+                    "procrastinate", "procrastinação",
+                    "work", "trabalho",
+                    "productivity", "produtividade",
+                    "productive", "produtivo",
+                    "stop", "para",
+                    "lazy", "preguiça",
+                    "outdoors", "rua",
+                    "effort", "esforço",
+                    "hours", "horas",
+                    "minutes", "minutos",
+                    "seconds", "segundos",
+                    "labor", "trabalhar",
+                    "try", "tenta"];
 
     var elements = document.getElementsByTagName('p');
 

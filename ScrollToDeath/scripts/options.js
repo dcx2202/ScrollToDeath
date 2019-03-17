@@ -2,7 +2,12 @@ alertify.set('notifier','position', 'bottom-center');
 alertify.set('notifier','delay', 2);
 
 var clearButton = document.getElementById("clearButton");
-document.getElementById("limit").defaultValue = "01:00:00";
+
+chrome.storage.local.get(['time_limit'], function(data){
+
+    document.getElementById("limit").defaultValue = data.time_limit;
+});
+
 var limit = document.getElementById("limit");
 var saveLimit = document.getElementById("saveLimit");
 
