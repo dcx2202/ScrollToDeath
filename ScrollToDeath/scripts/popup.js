@@ -87,6 +87,9 @@ trackButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 
+        if(tabs[0].url.startsWith("chrome") || tabs[0].url.startsWith("about"))
+            return;
+
         var current_url = getURLNoPath(tabs[0].url);
 
         var urls = [];
@@ -131,7 +134,9 @@ removeButton.onclick = function()
 {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         
-        
+        if(tabs[0].url.startsWith("chrome") || tabs[0].url.startsWith("about"))
+            return;
+
         var current_url = getURLNoPath(tabs[0].url);
 
         var urls = [];
